@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue 组件</title>
+    <script src="vue.js"></script>
+</head>
+<body>
+<div id="global">
+    <input v-model="inputValue"/>
+    <button @click="handleClick">添加</button>
+    <ul>
+        <todo-item v-for="(item, index) of list" :key="index" :content="item" :index="index" @delete="handleDelete"></todo-item>
+    </ul>
+</div>
+<div id="part">
+    <ul>
+        <todo-item-2></todo-item-2>
+    </ul>
+</div>
+<script>
+    // 每一个 Vue 组件都是一个 Vue 实例
+    // 全局组件
+    Vue.component("todo-item", {
+        props:['content', 'index'],
+        template: '<li @click="handleClick">{{content}}</li>',
+        methods: {
+            handleClick: function () {
+                this.$emit('delete', this.index);
+            }
+        }
+    });
+    new Vue({
+        el: "#global",
+        data: {
+            inputValue: "",
+            list: []
+        },
+        methods: {
+            handleClick: function () {
+                if (this.inputValue === "") {
+                    return;
+                }
+                this.list.push(this.inputValue);
+                this.inputValue = "";
+            },
+            handleDelete: function (index) {
+                this.list.splice(index, 1);
+            }
+        }
+            });
+
+    // 局部组件
+    var todoItem = {
+        template: '<li>item</li>'
+    };
+    new Vue({
+        el: "#part",
+        components: {
+            'todo-item-2': todoItem
+        },
+            });
+</script>
+</body>
+</html>
