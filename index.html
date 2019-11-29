@@ -16,6 +16,21 @@
     <div>{{count}}</div>
     <div v-if="show">Hello World(隐藏时 div 是从 dom 中删除)</div>
     <div v-show="show">Hello World(隐藏时 div 不会从 dom 中清除，性能更好)</div>
+    <div v-if="show">
+        用户名：<input key="username"/>
+    </div>
+    <div v-else>
+        邮箱：<input key="mail"/>
+    </div>
+    <div v-if="show === 'a'">
+        This is a
+    </div>
+    <div v-else-if="show === 'b'">
+        This is b
+    </div>
+    <div v-else>
+        This is others
+    </div>
     <button @click="handleClick">Toggle</button>
     <ul>
         <li v-for="item of list">{{item}}</li>
@@ -28,7 +43,7 @@
 </div>
 <script>
     // 创建一个 Vue 实例
-    new Vue({
+    var vm = new Vue({
             el: "#root",
             data: {
                 content: "this is content",
