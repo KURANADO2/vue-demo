@@ -28,6 +28,28 @@
     <div @click="handleDivClick" :class="{activated: isActivated}">Hello World!</div>
     <div @click="handleDivClick2" :class="[activated2]">Hello World2!</div>
     <div @click="handleDivClick3" :style="[styleObj, {fontSize: '20px'}]">Hello World3!</div>
+    <div v-for="item of list2" :key="item.id">
+        {{item.id}} - {{item.text}}
+    </div>
+    <div v-for="item of list2">
+        <div>
+            {{item.text}}
+        </div>
+        <span>
+            {{item.text}}
+        </span>
+    </div>
+    <template v-for="item of list2">
+        <div>
+            {{item.text}}
+        </div>
+        <span>
+            {{item.text}}
+        </span>
+    </template>
+    <div v-for="(item, key) of userInfo">
+        {{key}} - {{item}}
+    </div>
 </div>
 <div id="part">
     <ul>
@@ -59,6 +81,20 @@
             activated2: "",
             styleObj: {
                 color: "black"
+            },
+            list2: [
+                {id: "0001",
+                text: "hello"},
+                {id: "0002",
+                 text: "world"},
+                {id: "0003",
+                 text: "hei"},
+            ],
+            userInfo: {
+                name: "Dell",
+                age: 28,
+                gender: "male",
+                salary: "secret"
             }
         },
         computed: {

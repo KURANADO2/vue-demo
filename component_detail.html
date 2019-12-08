@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue 组件使用的细节点</title>
+    <script src="vue.js"></script>
+</head>
+<body>
+<div id="root">
+    <!-- 不符合 H5 标准，H5 要求 table 下一定要有 tr 标签，浏览器渲染 DOM 结构存在问题 -->
+    <table>
+        <row></row>
+        <row></row>
+        <row></row>
+    </table>
+    <!-- 符合 H5 标准 -->
+    <table>
+        <tr is="row"></tr>
+        <tr is="row"></tr>
+        <tr is="row"></tr>
+    </table>
+
+    <counter ref="one" @change="handleChange"></counter>
+    <counter ref="two" @change="handleChange"></counter>
+    <div>{{total}}</div>
+</div>
+<script>
+    Vue.component('row', {
+        data: function() {
+            return {
+                content: 'this is content'
+            }
+        },
+        template: "<tr><td>{{content}}</td></tr>"
+    });
+    Vue.component('counter', {
+        data: function() {
+            return {
+                number: 0
+            }
+        },
+        template: "<div @click='handleClick'>{{number}}</div>",
+        methods: {
+            handleClick: function () {
+                this.number ++;
+                this.$emit('change', this.number)
+            }
+        }
+    });
+    var app = new Vue({
+        el: "#root",
+        data: {
+            total: 0
+        },
+        methods: {
+            handleChange: function () {
+                this.total = this.$refs.one.number + this.$refs.two.number;
+            }
+        }
+    });
+</script>
+</body>
+</html>

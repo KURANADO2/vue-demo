@@ -1,0 +1,45 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue 插槽</title>
+    <script src="vue.js"></script>
+</head>
+<body>
+<div id="root">
+    <!-- 父组件 -->
+    <body-content>
+        <div class="header" slot="header">header</div>
+        <div class="footer" slot="footer">footer</div>
+    </body-content>
+    <child>
+        <template slot-scope="props">
+            <li>{{props.item}}</li>
+        </template>
+    </child>
+</div>
+<script>
+    // 子组件
+    Vue.component('body-content', {
+        template: `<div><slot name='header'>default header</slot>
+                  <div class="content">content</div>
+                  <slot name='footer'>default footer</slot></div>`
+    });
+    Vue.component('child', {
+        data: function() {
+            return {
+                list: [1, 2, 3, 4]
+            }
+        },
+        template: `<div>
+                       <ul>
+                           <slot v-for="item of list" :item="item">{{item}}</slot>
+                       </ul>
+                   </div>`
+    });
+    var app = new Vue({
+        el: "#root"
+    });
+</script>
+</body>
+</html>

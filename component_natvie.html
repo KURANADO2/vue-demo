@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>给组件绑定原生事件</title>
+    <script src="vue.js"></script>
+</head>
+<body>
+<div id="root">
+    <!-- 父组件 -->
+    <child @click="handleClick"></child>
+    <child @click.native="handleClick2"></child>
+</div>
+<script>
+    // 子组件
+    Vue.component('child', {
+        template: "<div>child</div>"
+    });
+    var app = new Vue({
+        el: "#root",
+        methods: {
+            handleClick: function () {
+                console.log("组件的自定义事件没有被触发，需要在子组件中使用 $emit('click') 定义事件才会被触发，或者直接给组件绑定原生事件")
+            },
+            handleClick2: function () {
+                console.log("原生事件被触发")
+            }
+        }
+    });
+</script>
+</body>
+</html>
